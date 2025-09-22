@@ -118,13 +118,10 @@ if "Cl4" in df.columns and df["Cl4"].notna().any():
 else:
     df["Ns_cm2"] = df["Cl3"]
 
-# 부호를 통일하기 위해 Q = - q * Ns 로 정의 (QV 그래프 뒤집힘 교정)
-df["Qs_C_per_cm2"] = - q * df["Ns_cm2"]
+df["Qs_C_per_cm2"] = q * df["Ns_cm2"]
 
 V = df["V"].to_numpy()
 Q = df["Qs_C_per_cm2"].to_numpy()
-
-# C(V) = dQ/dV
 C = central_diff(V, Q)
 df["C_F_per_cm2"] = C
 
